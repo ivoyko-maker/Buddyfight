@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import { attack, advancePlayerPhase, chargeAndDraw, createMatch, playCard } from './engine.js';
+
+const match = createMatch();
+assert.equal(match.player.hand.length, 5);
+assert.equal(match.player.deck.length, 15);
+assert.equal(advancePlayerPhase(match).phase, 'Inicio');
+assert.equal(advancePlayerPhase(match).phase, 'Roba');
+assert.equal(match.player.hand.length, 6);
+advancePlayerPhase(match);
+assert.equal(chargeAndDraw(match, 0).ok, true);
+assert.equal(match.player.gauge.length, 1);
+advancePlayerPhase(match);
+const card = match.player.hand.findIndex(candidate => candidate.type === 'monster');
+assert.equal(playCard(match, card).ok, true);
+const zone = ['left', 'center', 'right'].find(key => match.player.field[key]);
+advancePlayerPhase(match);
+match.player.field[zone].rest = false;
+match.opponent.field.center = { name: 'Objetivo', type: 'monster', power: 1000, crit: 1, rest: false };
+assert.equal(attack(match, 'player', zone).result, 'defender-destroyed');
+assert.equal(match.opponent.field.center, null);
+console.log('engine tests passed');
