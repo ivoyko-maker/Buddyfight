@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buddyfight Arena</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div><p class="eyebrow">SIMULADOR LOCAL · BETA</p><h1>Buddyfight <span>Arena</span></h1></div>
+      <div class="phase-panel"><span>FASE ACTUAL</span><strong id="phase-name">Preparación</strong><button id="next-phase" class="button button-primary">Siguiente fase →</button></div>
+    </header>
+
+    <section class="match-layout">
+      <aside class="player-panel opponent"><div class="player-heading"><span class="status-dot"></span><div><small>JUGADOR 2</small><h2>Nova</h2></div></div><div class="life"><span>VIDA</span><strong id="opponent-life">10</strong></div><div class="deck-info"><span>MAZO <b id="opponent-deck">20</b></span><span>MANO <b id="opponent-hand-count">5</b></span></div><div class="gauge"><span>GAUGE</span><div class="gauge-pips" id="opponent-gauge"></div></div></aside>
+
+      <section class="board" aria-label="Campo de batalla">
+        <div class="turn-indicator"><span>RONDA <b id="round">1</b></span><strong id="turn-name">Turno de Kai</strong><button class="text-button" id="restart">Reiniciar</button></div>
+        <div class="field opponent-field"><span class="field-label">CAMPO DE NOVA</span><div class="zones"><div class="zone center-zone" data-owner="opponent" data-zone="center"><span>Centro</span></div><div class="zone" data-owner="opponent" data-zone="left"><span>Izquierda</span></div><div class="zone" data-owner="opponent" data-zone="right"><span>Derecha</span></div><div class="zone item-zone" data-owner="opponent" data-zone="item"><span>Ítem</span></div></div></div>
+        <div class="battle-line"><span></span><b>BATALLA</b><span></span></div>
+        <div class="field"><span class="field-label">TU CAMPO</span><div class="zones"><div class="zone center-zone" data-owner="player" data-zone="center"><span>Centro</span></div><div class="zone" data-owner="player" data-zone="left"><span>Izquierda</span></div><div class="zone" data-owner="player" data-zone="right"><span>Derecha</span></div><div class="zone item-zone" data-owner="player" data-zone="item"><span>Ítem</span></div></div></div>
+        <div class="rules-note">Las cartas entran <b>en reposo</b> al ser llamadas. Un monstruo en el centro impide atacar directamente.</div>
+        <details class="rules-details"><summary>Reglas implementadas y alcance</summary><p>Se aplican el flujo de fases, tamaño máximo 3, reposo, batalla por poder, daño directo y drop. Counter, Soulguard, Penetrate, Double Attack y efectos concretos de cartas se muestran como texto, pero aún no se resuelven automáticamente.</p></details>
+      </section>
+
+      <aside class="player-panel"><div class="player-heading"><span class="status-dot active"></span><div><small>JUGADOR 1</small><h2>Kai</h2></div></div><div class="life"><span>VIDA</span><strong id="player-life">10</strong></div><div class="deck-info"><span>MAZO <b id="player-deck">20</b></span><span>MANO <b id="player-hand-count">5</b></span></div><div class="gauge"><span>GAUGE</span><div class="gauge-pips" id="player-gauge"></div></div></aside>
+    </section>
+
+    <section class="control-deck">
+      <section class="action-panel"><div><p class="eyebrow">ACCIONES</p><h2 id="action-title">Comienza el combate</h2><p id="action-hint">Avanza a la fase de Inicio para preparar tu turno.</p></div><div class="actions"><button class="action" id="charge" disabled>Cargar en gauge y robar</button><button class="action" id="play" disabled>Llamar / usar carta</button></div></section>
+      <section class="hand-panel"><div class="hand-header"><div><p class="eyebrow">TU MANO</p><h2>Cartas disponibles</h2></div><span id="selection-text">Selecciona una carta</span></div><div class="hand" id="hand"></div></section>
+      <aside class="log-panel"><p class="eyebrow">REGISTRO</p><ol id="game-log" aria-live="polite"></ol></aside>
+    </section>
+  </main>
+  <div id="toast" class="toast" hidden role="status"></div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
